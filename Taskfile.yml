@@ -1,0 +1,10 @@
+version: '3'
+
+tasks:
+  build:
+    cmd: go build -o bin/app cmd/main.go
+  run:
+    deps: [build]
+    env:
+      CONFIG_PATH: ./.env
+    cmd: ./bin/app
