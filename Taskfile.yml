@@ -8,3 +8,7 @@ tasks:
     env:
       CONFIG_PATH: ./.env
     cmd: ./bin/app
+  test:
+    cmd: go test -v ./...
+  compose:
+    cmd: docker compose up -d
