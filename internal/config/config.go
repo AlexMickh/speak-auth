@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/ilyakaznacheev/cleanenv"
 )
@@ -12,6 +13,7 @@ type Config struct {
 	Env  string `env:"ENV" env-default:"prod"`
 	Port int    `env:"PORT" env-default:"50061"`
 	DB   DBConfig
+	Jwt  JwtConfig
 }
 
 type DBConfig struct {
@@ -22,6 +24,11 @@ type DBConfig struct {
 	Name           string `env:"DB_NAME" env-default:"auth"`
 	MaxPools       int    `env:"DB_MAX_POOS" env-default:"5"`
 	MigrationsPath string `env:"MIGRATIONS_PATH" env-default:"./migrations"`
+}
+
+type JwtConfig struct {
+	Secret string        `env:"JWT_SECRET" env-required:"true"`
+	Ttl    time.Duration `env:"JWT_TTL" env-required:"true"`
 }
 
 func MustLoad() *Config {
