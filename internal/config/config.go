@@ -10,10 +10,12 @@ import (
 )
 
 type Config struct {
-	Env  string `env:"ENV" env-default:"prod"`
-	Port int    `env:"PORT" env-default:"50061"`
-	DB   DBConfig
-	Jwt  JwtConfig
+	Env             string `env:"ENV" env-default:"prod"`
+	Port            int    `env:"PORT" env-default:"50061"`
+	UserServiceAddr string `env:"USER_SERVICE_ADDR" env-required:"true"`
+	DB              DBConfig
+	Jwt             JwtConfig
+	Mail            MailConfig
 }
 
 type DBConfig struct {
@@ -27,8 +29,16 @@ type DBConfig struct {
 }
 
 type JwtConfig struct {
-	Secret string        `env:"JWT_SECRET" env-required:"true"`
-	Ttl    time.Duration `env:"JWT_TTL" env-required:"true"`
+	Secret     string        `env:"JWT_SECRET" env-required:"true"`
+	AccessTtl  time.Duration `env:"JWT_ACCESS_TTL" env-required:"true"`
+	RefreshTtl time.Duration `env:"JWT_REFRESH_TTL" env-required:"true"`
+}
+
+type MailConfig struct {
+	Host     string `env:"MAIL_HOST" env-required:"true"`
+	Port     int    `env:"MAIL_PORT" env-required:"true"`
+	FromAddr string `env:"MAIL_FROM_ADDR" env-required:"true"`
+	Password string `env:"MAIL_PASSWORD" env-required:"true"`
 }
 
 func MustLoad() *Config {

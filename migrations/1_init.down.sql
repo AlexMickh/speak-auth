@@ -1,3 +1,0 @@
-DROP DATABASE IF EXISTS users;
-
-DROP INDEX email_idx;
